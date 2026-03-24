@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Casa Cueva Las Palomas</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+ <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color:#dcd7d3; /* tono piedra elegante */
+      color: #333;
+    }
+
+    header {
+      background-image: url('img/casa2.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 250px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin: 0;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    .idiomas {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 8px 12px;
+      border-radius: 10px;
+      display: flex;
+      gap: 10px;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .idiomas img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid white;
+      transition: transform 0.3s ease;
+    }
+
+    .idiomas img:hover {
+      transform: scale(1.1);
+    }
+
+    nav {
+      background-color: #212529;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 1rem 1.5rem;
+      display: block;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    nav a:hover {
+      background-color: #343a40;
+    }
+
+    main {
+      padding: 2rem 1rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .seccion {
+      background-color:#fffdf9; /* marfil elegante */
+      padding: 2rem;
+      border: 1px solid #e0dcd9;
+      margin-bottom: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+
+    .seccion h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #1c1c1c;
+    }
+
+    .galeria {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .galeria a {
+      padding: 16px 28px;
+      background-color: #007bff;
+      color: white;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .galeria a:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+    }
+
+    .contacto p {
+      margin: 0.5rem 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #212529;
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      nav a {
+        padding: 0.8rem;
+      }
+
+      .galeria a {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Casa Cueva Las Palomas</h1>
+  </header>
+
+  <!-- Idiomas -->
+  <div class="idiomas">
+    <a href="index.html" title="Español"><img src="img/es.jpg" alt="Español"></a>
+    <a href="pagina_ingles/index.html" title="English"><img src="img/en.jpg" alt="English"></a>
+    <a href="pagina_aleman/index.html" title="Deutsch"><img src="img/de.jpg" alt="Deutsch"></a>
+  </div>
+
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#contacto">Contacto</a>
+    <a href="#galeria">Casas</a>
+    <a href="calendario.html">Calendario</a>
+    <a href="lapalma.html" target="_blank">La Palma</a>
+  </nav>
+
+  <main>
+    <section id="inicio" class="seccion">
+      <h2>Bienvenidos</h2>
+      <p>Descubre la tranquilidad y el encanto natural de nuestras casas cueva en la hermosa isla de La Palma.</p>
+    </section>
+
+    <section id="galeria" class="seccion">
+      <h2>Casas disponibles</h2>
+      <div class="galeria">
+        <a href="casa1.html">Casa 1</a>
+        <a href="casa2.html">Casa 2</a>
+      </div>
+    </section>
+
+    <section id="contacto" class="seccion contacto">
+      <h2>Contacto</h2>
+      <p><strong>Email:</strong> javiergonzalezjeronimo@gmail.com</p>
+      <p><strong>Teléfono:</strong> +34 606 967 384</p>
+      <p><strong>Dirección:</strong> Cam. la Lajita, 3, Los Llanos, Santa Cruz de La Palma</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Casa Cueva Las Palomas | <a href="privacidad.html">Política de privacidad</a></p>
+  </footer>
+
+</body>
+</html>

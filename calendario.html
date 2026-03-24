@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calendario de Disponibilidad | Casa Cueva Las Palomas</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #e0e0e0;
+      color: #333;
+    }
+
+    header {
+      background-image: url('img/casa1.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 250px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin: 0;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    nav {
+      background-color: #212529;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 1rem 1.5rem;
+      display: block;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    nav a:hover {
+      background-color: #343a40;
+    }
+
+    main {
+      padding: 2rem 1rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .contenedor {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+
+    .contenedor h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #1c1c1c;
+    }
+
+    .calendar-block {
+      margin-bottom: 3rem;
+    }
+
+    .calendar-block h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #2c2c2c;
+    }
+
+    .calendar-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin: 0.5rem 0 1rem;
+    }
+
+    .calendar-nav button {
+      padding: 8px 12px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    .calendar-nav button:hover {
+      background-color: #0056b3;
+    }
+
+    .calendar {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .calendar th,
+    .calendar td {
+      width: 14.28%;
+      text-align: center;
+      padding: 10px;
+      border: 1px solid #ddd;
+      user-select: none;
+    }
+
+    .calendar td.occupied {
+      background-color: #f8d7da;
+      color: #721c24;
+      font-weight: bold;
+    }
+
+    .calendar td:hover:not(.occupied) {
+      background-color: #f1f1f1;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #212529;
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      nav a {
+        padding: 0.8rem;
+      }
+
+      .calendar-nav {
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Disponibilidad</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="casa1.html">Casa 1</a>
+    <a href="casa2.html">Casa 2</a>
+    <a href="lapalma.html" target="_blank">Información sobre La Palma</a>
+    <a href="reservas_esp/reserva.html">Reservar</a>
+  </nav>
+
+  <main>
+    <section class="contenedor">
+      <h2>Calendario de Disponibilidad</h2>
+      <p>Consulta la disponibilidad actualizada de nuestras casas cueva.</p>
+
+      <!-- Calendario Casa 1 -->
+      <div class="calendar-block">
+        <h3>Casa Cueva 1</h3>
+        <div class="calendar-nav">
+          <button onclick="changeYear('c1', -1)">⏪</button>
+          <button onclick="changeMonth('c1', -1)">⬅</button>
+          <span id="monthYear-c1"></span>
+          <button onclick="changeMonth('c1', 1)">➡</button>
+          <button onclick="changeYear('c1', 1)">⏩</button>
+        </div>
+        <table class="calendar">
+          <thead>
+            <tr>
+              <th>Lu</th><th>Ma</th><th>Mi</th><th>Ju</th><th>Vi</th><th>Sa</th><th>Do</th>
+            </tr>
+          </thead>
+          <tbody id="calendarBody-c1"></tbody>
+        </table>
+      </div>
+
+      <!-- Calendario Casa 2 -->
+      <div class="calendar-block">
+        <h3>Casa Cueva 2</h3>
+        <div class="calendar-nav">
+          <button onclick="changeYear('c2', -1)">⏪</button>
+          <button onclick="changeMonth('c2', -1)">⬅</button>
+          <span id="monthYear-c2"></span>
+          <button onclick="changeMonth('c2', 1)">➡</button>
+          <button onclick="changeYear('c2', 1)">⏩</button>
+        </div>
+        <table class="calendar">
+          <thead>
+            <tr>
+              <th>Lu</th><th>Ma</th><th>Mi</th><th>Ju</th><th>Vi</th><th>Sa</th><th>Do</th>
+            </tr>
+          </thead>
+          <tbody id="calendarBody-c2"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Casa Cueva Las Palomas | <a href="privacidad.html">Política de privacidad</a>
+  </footer>
+
+  <script>
+    const calendars = {
+      c1: {
+        currentMonth: new Date().getMonth(),
+        currentYear: new Date().getFullYear(),
+        occupiedDates: ["2025-07-20", "2025-08-05", "2025-09-12"],
+      },
+      c2: {
+        currentMonth: new Date().getMonth(),
+        currentYear: new Date().getFullYear(),
+        occupiedDates: ["2025-07-21", "2025-08-15", "2025-09-10"],
+      },
+    };
+
+    const monthNames = [
+      "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ];
+
+    function renderCalendar(id) {
+      const calendar = calendars[id];
+      const tbody = document.getElementById(`calendarBody-${id}`);
+      const label = document.getElementById(`monthYear-${id}`);
+      tbody.innerHTML = "";
+
+      const firstDay = new Date(calendar.currentYear, calendar.currentMonth, 1);
+      const startingDay = (firstDay.getDay() + 6) % 7;
+      const daysInMonth = new Date(calendar.currentYear, calendar.currentMonth + 1, 0).getDate();
+
+      let date = 1;
+      for (let i = 0; i < 6; i++) {
+        const row = document.createElement("tr");
+
+        for (let j = 0; j < 7; j++) {
+          const cell = document.createElement("td");
+
+          if (i === 0 && j < startingDay) {
+            cell.innerHTML = "";
+          } else if (date > daysInMonth) {
+            cell.innerHTML = "";
+          } else {
+            const fullDate = `${calendar.currentYear}-${String(calendar.currentMonth + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+            cell.textContent = date;
+
+            if (calendar.occupiedDates.includes(fullDate)) {
+              cell.classList.add("occupied");
+              cell.title = "No disponible";
+            }
+
+            date++;
+          }
+
+          row.appendChild(cell);
+        }
+
+        tbody.appendChild(row);
+      }
+
+      label.textContent = `${monthNames[calendar.currentMonth]} ${calendar.currentYear}`;
+    }
+
+    function changeMonth(id, delta) {
+      calendars[id].currentMonth += delta;
+      if (calendars[id].currentMonth < 0) {
+        calendars[id].currentMonth = 11;
+        calendars[id].currentYear--;
+      } else if (calendars[id].currentMonth > 11) {
+        calendars[id].currentMonth = 0;
+        calendars[id].currentYear++;
+      }
+      renderCalendar(id);
+    }
+
+    function changeYear(id, delta) {
+      calendars[id].currentYear += delta;
+      renderCalendar(id);
+    }
+
+    renderCalendar('c1');
+    renderCalendar('c2');
+  </script>
+</body>
+</html>

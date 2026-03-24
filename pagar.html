@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagar Reserva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+        .reserva-box {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        p {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="reserva-box">
+    <h1>Reserva Casa Cueva</h1>
+    <p>Precio total: <strong>50 €</strong></p>
+    <button id="pagar">Pagar ahora</button>
+</div>
+
+<!-- Stripe.js -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    const stripe = Stripe("pk_test_51SZ9EmEnTCU0Dz6YzexEzvWXDWXE9w1QFZbnObocSUFKIaXQc9X2EEo4V60zn7rK6SGaqkmKgl2pwxg3EleOq3eF00qLLmgTt8"); // Pega aquí tu Publishable Key
+
+    document.getElementById("pagar").addEventListener("click", () => {
+        fetch("crear_pago.php", {
+            method: "POST"
+        })
+        .then(res => res.json())
+        .then(data => {
+            // Redirigir a Stripe Checkout
+            stripe.redirectToCheckout({ sessionId: data.id });
+        })
+        .catch(error => console.error("Error:", error));
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Información de La Palma | Casa Cueva Las Palomas</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #e0e0e0;
+      color: #333;
+    }
+
+    header {
+      background-image: url('img/casa2.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 250px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin: 0;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    nav {
+      background-color: #212529;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 1rem 1.5rem;
+      display: block;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    nav a:hover {
+      background-color: #343a40;
+    }
+
+    main {
+      padding: 2rem 1rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .seccion {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .seccion h2, .seccion h3 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #1c1c1c;
+    }
+
+    .seccion ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .seccion li {
+      margin-bottom: 1rem;
+      padding-left: 1rem;
+      border-left: 4px solid #007bff;
+      background-color: #f4f4f4;
+    }
+
+    .imagenes {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 2rem;
+    }
+
+    .imagenes figure {
+      width: 300px;
+      margin: 0;
+      text-align: center;
+    }
+
+    .imagenes img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .imagenes img:hover {
+      transform: scale(1.05);
+    }
+
+    .imagenes figcaption {
+      margin-top: 8px;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #212529;
+      color: #ccc;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+    }
+
+    footer a {
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      nav a {
+        padding: 0.8rem;
+      }
+
+      .imagenes figure {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Casa Cueva Las Palomas</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="casa1.html">Casa 1</a>
+    <a href="casa2.html">Casa 2</a>
+    <a href="calendario.html">Calendario</a>
+    <a href="lapalma.html">Información sobre La Palma</a>
+  </nav>
+
+  <main>
+    <section class="seccion" id="info-lapalma">
+      <h2>Información sobre La Palma</h2>
+      <p>
+        La Palma, conocida como <strong>"La Isla Bonita"</strong>, es una de las islas más verdes del archipiélago canario. Con paisajes volcánicos,
+        bosques de laurisilva y cielos estrellados, es un destino ideal para amantes de la naturaleza y la tranquilidad.
+      </p>
+
+      <h3>Sitios Curiosos para Visitar</h3>
+      <ul>
+        <li><strong>Parque Nacional de la Caldera de Taburiente:</strong> Un impresionante cráter volcánico rodeado de montañas y bosques.</li>
+        <li><strong>Roque de los Muchachos:</strong> Uno de los mejores lugares del mundo para la observación astronómica.</li>
+        <li><strong>Ruta de los Volcanes:</strong> Sendero que atraviesa paisajes volcánicos únicos desde El Paso hasta Fuencaliente.</li>
+        <li><strong>Porís de Candelaria:</strong> Una pintoresca cala escondida bajo un acantilado, con casas excavadas en la roca.</li>
+      </ul>
+
+      <h3>Imágenes de La Palma</h3>
+      <div class="imagenes">
+        <figure>
+          <img src="img/caldera.jpg" alt="Caldera de Taburiente">
+          <figcaption>Caldera de Taburiente</figcaption>
+        </figure>
+        <figure>
+          <img src="img/roque.jpg" alt="Roque de los Muchachos">
+          <figcaption>Roque de los Muchachos</figcaption>
+        </figure>
+        <figure>
+          <img src="img/poris.jpg" alt="Porís de Candelaria">
+          <figcaption>Porís de Candelaria</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Casa Cueva Las Palomas | <a href="privacidad.html">Política de privacidad</a></p>
+  </footer>
+
+</body>
+</html>

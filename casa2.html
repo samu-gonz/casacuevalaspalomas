@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Casa 2 - Casa Cueva Las Palomas</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #e0e0e0;
+      color: #333;
+    }
+
+    header {
+      background-image: url('img/casa2.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 250px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin: 0;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    nav {
+      background-color: #212529;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 1rem 1.5rem;
+      display: block;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    nav a:hover {
+      background-color: #343a40;
+    }
+
+    main {
+      padding: 2rem 1rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .seccion {
+      background-color: white;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .seccion h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #1c1c1c;
+    }
+
+    .seccion p,
+    .seccion ul {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .seccion ul {
+      padding-left: 1.2rem;
+      list-style-type: disc;
+    }
+
+    .galeria {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .galeria a {
+      padding: 16px 28px;
+      background-color: #007bff;
+      color: white;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .galeria a:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #212529;
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      nav a {
+        padding: 0.8rem;
+      }
+
+      .galeria a {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Casa 2</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="casa1.html">Casa 1</a>
+    <a href="casa2.html">Casa 2</a>
+    <a href="lapalma.html" target="_blank">Información sobre La Palma</a>
+    <a href="calendario.html">Calendario</a>
+  </nav>
+
+  <main>
+    <section class="seccion">
+      <h2>Descripción</h2>
+      <p>Casa Cueva de Las Palomas 2 es una encantadora vivienda que combina el estilo tradicional canario con todas las comodidades modernas. Pensada para alojar cómodamente a 2 personas, esta casa es perfecta para parejas o viajeros que buscan una experiencia única en un entorno natural privilegiado.</p>
+      <p>Dispone de salón-cocina totalmente equipada, un dormitorio, baño completo y una amplia terraza desde donde podrás contemplar vistas panorámicas de los paisajes volcánicos.</p>
+      <p>Está ubicada a poca distancia de senderos naturales, restaurantes típicos y puntos de interés cultural, facilitando así una experiencia completa y auténtica en La Palma.</p>
+    </section>
+
+    <section class="seccion">
+      <h2>Características</h2>
+      <ul>
+        <li>1 Dormitorio con cama doble</li>
+        <li>Cocina equipada y salón</li>
+        <li>Baño completo</li>
+        <li>Terraza privada con vistas</li>
+        <li>Zona de barbacoa</li>
+        <li>Se permiten mascotas</li>
+        <li>Wi-Fi gratuito</li>
+      </ul>
+    </section>
+
+<section class="seccion">
+  <h2>Tarifas</h2>
+  <p>El precio por noche es de <strong>75€</strong> para 2 personas. Persona adicional: <strong>+15€/noche</strong>. Se aceptan reservas mínimas de 2 noches.</p>
+  <p>Descuentos disponibles para estancias largas. Consulta disponibilidad en nuestro <a href="calendario.html">calendario</a>.</p>
+</section>
+
+
+    <section class="seccion">
+      <h2>Galería</h2>
+      <div class="galeria">
+        <a href="imagenes_casa2.html" target="_blank">Ver galería de imágenes</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Casa Cueva Las Palomas | <a href="privacidad.html">Política de privacidad</a></p>
+  </footer>
+
+</body>
+</html>

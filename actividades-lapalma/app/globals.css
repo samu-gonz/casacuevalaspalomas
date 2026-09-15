@@ -3,25 +3,117 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --sand: #f3efe6;
+  --ink: #1c1917;
+  --forest: #3f6212;
+  --ocean: #0f766e;
+  --foam: #ecfdf5;
+  --lava: #9a3412;
+  --background: var(--sand);
+  --foreground: var(--ink);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --sand: #e7e5e4;
+  --ink: #0c0a09;
+  --forest: #a3e635;
+  --ocean: #2dd4bf;
+  --foam: #022c22;
+  --lava: #fb923c;
+  --background: #0c0a09;
+  --foreground: #e7e5e4;
 }
 
 body {
-  color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--foreground);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+.font-display {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+}
+
+.font-sans {
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+.prose-alp {
+  @apply space-y-3 text-[15px] leading-relaxed;
+  color: color-mix(in srgb, var(--ink) 85%, transparent);
+}
+
+.dark .prose-alp {
+  color: color-mix(in srgb, var(--sand) 80%, transparent);
+}
+
+.prose-alp h2,
+.prose-alp h3 {
+  @apply font-display text-forest;
+}
+
+.dark .prose-alp h2,
+.dark .prose-alp h3 {
+  @apply text-foam;
+}
+
+.prose-alp h2 {
+  @apply mt-6 text-2xl;
+}
+
+.prose-alp h3 {
+  @apply mt-4 text-xl;
+}
+
+.prose-alp ul {
+  @apply list-disc space-y-1 pl-5;
+}
+
+.prose-alp ol {
+  @apply list-decimal space-y-1 pl-5;
+}
+
+.prose-alp a {
+  @apply text-ocean underline-offset-2 hover:underline;
+}
+
+.prose-alp p {
+  @apply my-2;
+}
+
+/* Hero atmosphere */
+.hero-sky {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 20%, rgba(15, 118, 110, 0.35), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 85% 10%, rgba(63, 98, 18, 0.4), transparent 50%),
+    linear-gradient(160deg, #0c0a09 0%, #1c1917 40%, #134e4a 100%);
+}
+
+.dark .hero-sky {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 20%, rgba(45, 212, 191, 0.2), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 85% 10%, rgba(163, 230, 53, 0.15), transparent 50%),
+    linear-gradient(160deg, #0c0a09 0%, #1c1917 45%, #042f2e 100%);
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rise {
+  animation: rise-in 0.7s ease-out both;
+}
+
+.animate-rise-delay {
+  animation: rise-in 0.8s ease-out 0.15s both;
+}
+
+.animate-rise-late {
+  animation: rise-in 0.9s ease-out 0.3s both;
 }

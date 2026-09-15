@@ -1,13 +1,10 @@
 # ActividadesLaPalma
 
-App Next.js (App Router, JavaScript) para rutas y actividades en La Palma. Pack premium 6€ (pago único).
+Web de rutas en La Palma: capa gratis por ruta + pack técnico **6€** (pago único, acceso de por vida).
 
-## Requisitos
+Stack: Next.js 14 (App Router, **JavaScript**), Tailwind, Prisma, Stripe, Resend, Vercel Blob.
 
-- Node.js 18+
-- Postgres (p. ej. Vercel Postgres)
-
-## Instalación
+## Arranque local
 
 ```bash
 cd actividades-lapalma
@@ -15,57 +12,50 @@ npm install
 cp .env.example .env
 ```
 
-Rellena `.env` (mínimo `DATABASE_URL` para Prisma).
-
-## Base de datos
+Rellena al menos `DATABASE_URL` (Postgres). Luego:
 
 ```bash
-npx prisma migrate dev --name init
-# o, si aún no hay migraciones:
 npx prisma db push
 npx prisma generate
-```
-
-## Desarrollo
-
-```bash
+npm run db:seed
 npm run dev
 ```
 
 Abre [http://localhost:3000](http://localhost:3000).
 
-## Variables de entorno
+## Variables
 
 | Variable | Uso |
 | --- | --- |
 | `DATABASE_URL` | Postgres (Prisma) |
-| `STRIPE_SECRET_KEY` | Stripe Checkout |
-| `STRIPE_WEBHOOK_SECRET` | Webhook Stripe |
-| `RESEND_API_KEY` | Emails (magic link) |
-| `BLOB_READ_WRITE_TOKEN` | Vercel Blob (PDFs/imágenes) |
-| `ADMIN_PASSWORD` | Acceso `/admin` |
+| `STRIPE_SECRET_KEY` | Checkout |
+| `STRIPE_WEBHOOK_SECRET` | Firma webhook |
+| `RESEND_API_KEY` | Magic link por email |
+| `BLOB_READ_WRITE_TOKEN` | Subida PDFs (admin) |
+| `ADMIN_PASSWORD` | Login `/admin` |
 | `EMAIL_FROM` | Remitente Resend |
-| `NEXT_PUBLIC_APP_URL` | URL pública de la app |
+| `NEXT_PUBLIC_APP_URL` | URL pública (links y redirects) |
 
-Ver `.env.example`. No subas secretos.
+Sin secretos de Stripe/Resend la web y el admin funcionan; el checkout y los emails responderán con error claro o loguearán el magic link en consola.
+
+## Probar checkout (modo test)
+
+1. Claves `sk_test_…` en `STRIPE_SECRET_KEY`.
+2. Stripe CLI: `stripe listen --forward-to localhost:3000/api/webhooks/stripe` → copia el `whsec_…` a `STRIPE_WEBHOOK_SECRET`.
+3. `RESEND_API_KEY` + `EMAIL_FROM` (o mira el magic link en logs si no hay Resend).
+4. En la web: email + «Pagar 6€» (cupón seed `PALMA10` = 10% si quieres).
+5. Tarjeta test `4242…`. Tras el webhook, abre el enlace del correo / log.
+
+## Rutas
+
+- `/` hero y propuesta de valor
+- `/rutas` catálogo + filtros
+- `/rutas/[slug]` gratis + blur técnico
+- `/mapa` Leaflet
+- `/admin` CRUD rutas, compras, cupones
+- APIs: `/api/checkout`, `/api/webhooks/stripe`, `/api/access/verify`, `/api/access/resend`
 
 ## Scripts
 
-- `npm run dev` — servidor de desarrollo
-- `npm run build` / `npm start` — producción
-- `npm run lint` — ESLint
-- `npx prisma studio` — UI de datos
-
-## Estructura (Fase 1)
-
-```
-actividades-lapalma/
-  app/           # App Router
-  app/admin/     # (Fase posterior)
-  app/rutas/     # (Fase posterior)
-  app/mapa/      # (Fase posterior)
-  app/api/       # (Fase posterior)
-  components/
-  lib/prisma.js
-  prisma/schema.prisma
-```
+- `npm run dev` / `build` / `start` / `lint`
+- `npm run db:push` · `db:seed` · `db:studio`

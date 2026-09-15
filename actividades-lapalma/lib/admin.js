@@ -1,3 +1,4 @@
+import "./load-secrets.js";
 import { cookies } from "next/headers";
 import crypto from "crypto";
 import { ADMIN_COOKIE } from "./constants";

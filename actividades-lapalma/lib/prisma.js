@@ -1,3 +1,4 @@
+import "./load-secrets.js";
 import { PrismaClient } from "@prisma/client";
 
 const globalForPrisma = globalThis;

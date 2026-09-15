@@ -38,6 +38,19 @@ Abre [http://localhost:3000](http://localhost:3000).
 
 Sin secretos de Stripe/Resend la web y el admin funcionan; el checkout y los emails responderán con error claro o loguearán el magic link en consola.
 
+## Deploy (Vercel)
+
+Root Directory del proyecto: **`actividades-lapalma`**.
+
+1. Crea Postgres (Neon / Vercel Postgres / Prisma Postgres) y copia `DATABASE_URL`.
+2. En Vercel → Project → Settings → Environment Variables, pega las vars de `.env.example`.
+3. Build Command sugerido: `prisma generate && next build` (ya en `vercel.json`).
+4. Tras el primer deploy con DB: en local o CI,
+   `DATABASE_URL=... npx prisma db push && npm run db:seed`
+5. Webhook Stripe: `https://<tu-dominio>/api/webhooks/stripe`
+
+`binaryTargets` de Prisma incluye `rhel-openssl-3.0.x` para serverless Vercel.
+
 ## Probar checkout (modo test)
 
 1. Claves `sk_test_…` en `STRIPE_SECRET_KEY`.

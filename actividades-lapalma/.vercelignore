@@ -3,4 +3,3 @@ node_modules
 .env
 .env.deploy
 .env*.local
-lib/deploy-secrets.js

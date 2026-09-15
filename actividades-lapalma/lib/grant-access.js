@@ -2,19 +2,35 @@ import crypto from "crypto";
 import prisma from "@/lib/prisma";
 import { sendAccessEmail } from "@/lib/email";
 import { ACCESS_TOKEN_TTL_MS } from "@/lib/constants";
-// TTL magic link (7 días)
-// Purchase + AccessToken: acceso de por vida sin Stripe (demo admin).
+
+function resolveAppUrl(explicitUrl) {
+  const raw =
+    explicitUrl ||
+    process.env.NEXT_PUBLIC_APP_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "") ||
+    "http://localhost:3000";
+  const url = typeof raw === "string" ? raw.trim() : "";
+  if (!url || url === "[object Object]") {
+    return "http://localhost:3000";
+  }
+  return url.replace(/\/$/, "");
+}
 
 /**
- * Crea (o reutiliza) Purchase de demo + AccessToken y opcionalmente envía email.
+ * Crea (o reutiliza) Purchase demo + AccessToken y opcionalmente envía email.
  * Usado por admin para que Samuel vea premium sin Stripe.
+ *
+ * @param {{ email: string, sendEmail?: boolean, source?: string, appUrl?: string }} opts
  */
 export async function grantPremiumAccess({
   email,
   sendEmail = true,
   source = "admin",
-}) {
-  const normalized = email.trim().toLowerCase();
+  appUrl: appUrlOption,
+} = {}) {
+  const normalized = String(email || "")
+    .trim()
+    .toLowerCase();
   if (!normalized || !normalized.includes("@")) {
     throw new Error("Email inválido");
   }
@@ -23,7 +39,6 @@ export async function grantPremiumAccess({
     .randomBytes(4)
     .toString("hex")}`;
 
-  // Una sola purchase “demo” estable por email+source para no llenar la tabla.
   const existing = await prisma.purchase.findFirst({
     where: {
       email: normalized,
@@ -38,7 +53,7 @@ export async function grantPremiumAccess({
         stripeSessionId,
         amountPaid: 0,
         discountApplied: true,
-        discountCode: source.toUpperCase(),
+        discountCode: String(source).toUpperCase(),
       },
     });
   }
@@ -49,13 +64,17 @@ export async function grantPremiumAccess({
     data: { email: normalized, token, expiresAt },
   });
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  const appUrl = resolveAppUrl(appUrlOption);
   const magicLink = `${appUrl}/api/access/verify?token=${token}`;
 
-  let emailResult = { skipped: true, magicLink };
+  let emailResult = { skipped: true };
   if (sendEmail) {
     emailResult = await sendAccessEmail({ to: normalized, magicLink });
   }
 
-  return { email: normalized, magicLink, emailResult };
+  return {
+    email: normalized,
+    magicLink: String(magicLink),
+    emailSkipped: Boolean(emailResult?.skipped),
+  };
 }

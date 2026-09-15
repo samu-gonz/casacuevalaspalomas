@@ -4,6 +4,23 @@ import { useEffect, useMemo, useState } from "react";
 import { DIFFICULTIES, ZONES } from "@/lib/constants";
 import { formatEurosFromCents } from "@/lib/format";
 
+/** Evita renderizar objetos crudos ([object Object]) en la UI. */
+function asText(value, fallback = "") {
+  if (value == null) return fallback;
+  if (typeof value === "string") return value;
+  if (typeof value === "number" || typeof value === "boolean") {
+    return String(value);
+  }
+  if (typeof value?.message === "string") return value.message;
+  if (typeof value?.url === "string") return value.url;
+  if (typeof value?.magicLink === "string") return value.magicLink;
+  try {
+    return JSON.stringify(value);
+  } catch {
+    return fallback || "Error desconocido";
+  }
+}
+
 const emptyPlace = {
   slug: "",
   title: "",
@@ -47,7 +64,7 @@ export default function AdminDashboard({ initialAuthed }) {
     });
     const data = await res.json();
     if (!res.ok) {
-      setError(data.error || "Error de acceso");
+      setError(asText(data.error, "Error de acceso"));
       return;
     }
     setAuthed(true);
@@ -112,7 +129,7 @@ export default function AdminDashboard({ initialAuthed }) {
     });
     const data = await res.json();
     if (!res.ok) {
-      setError(data.error || "No se pudo guardar");
+      setError(asText(data.error, "No se pudo guardar"));
       return;
     }
     setMsg("Ruta guardada");
@@ -135,7 +152,7 @@ export default function AdminDashboard({ initialAuthed }) {
     });
     const data = await res.json();
     if (!res.ok) {
-      setError(data.error || "Error al subir PDF");
+      setError(asText(data.error, "Error al subir PDF"));
       return;
     }
     setMsg("PDF subido");
@@ -154,7 +171,7 @@ export default function AdminDashboard({ initialAuthed }) {
     });
     if (!res.ok) {
       const data = await res.json();
-      setError(data.error || "No se pudo crear el cupón");
+      setError(asText(data.error, "No se pudo crear el cupón"));
       return;
     }
     setNewCode({ code: "", percentOff: 20 });
@@ -173,23 +190,35 @@ export default function AdminDashboard({ initialAuthed }) {
   async function grantAccess(e) {
     e.preventDefault();
     setError("");
+    setMsg("");
     setGrantLink("");
     setGrantLoading(true);
     try {
       const res = await fetch("/api/admin/grant-access", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: grantEmail, sendEmail: true }),
+        body: JSON.stringify({ email: grantEmail, sendEmail: false }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "No se pudo generar acceso");
-      setGrantLink(data.magicLink || "");
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(asText(data.error, "No se pudo generar acceso"));
+      }
+      const link = asText(data.magicLink || data.url, "");
+      if (!link.startsWith("http")) {
+        throw new Error(
+          "La API no devolvió un enlace válido. Revisa NEXT_PUBLIC_APP_URL / logs."
+        );
+      }
+      setGrantLink(link);
       setMsg(
-        data.message ||
-          "Acceso generado. Abre el magic link (o cópialo) para activar la cookie."
+        asText(
+          data.message,
+          "Acceso generado. Abre el magic link para activar la cookie de 1 año."
+        )
       );
     } catch (err) {
-      setError(err.message || "Error al generar acceso");
+      setError(asText(err?.message || err, "Error al generar acceso"));
+      setGrantLink("");
     } finally {
       setGrantLoading(false);
     }
@@ -262,8 +291,8 @@ export default function AdminDashboard({ initialAuthed }) {
         ))}
       </div>
 
-      {msg ? <p className="mt-4 text-sm text-forest">{msg}</p> : null}
-      {error ? <p className="mt-4 text-sm text-red-700">{error}</p> : null}
+      {msg ? <p className="mt-4 text-sm text-forest">{asText(msg)}</p> : null}
+      {error ? <p className="mt-4 text-sm text-red-700">{asText(error)}</p> : null}
 
       {tab === "places" ? (
         <section className="mt-6 space-y-4">
@@ -577,11 +606,30 @@ export default function AdminDashboard({ initialAuthed }) {
               </button>
             </form>
             {grantLink ? (
-              <div className="mt-4 break-all rounded-lg bg-ink/5 p-3 text-xs">
-                <p className="mb-1 font-medium text-ink/70">Abre este enlace:</p>
-                <a href={grantLink} className="text-ocean underline">
+              <div className="mt-4 space-y-2 rounded-lg bg-ink/5 p-3 text-xs">
+                <p className="font-medium text-ink/70">Magic link (ábrelo o cópialo):</p>
+                <a
+                  href={grantLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block break-all text-ocean underline"
+                >
                   {grantLink}
                 </a>
+                <button
+                  type="button"
+                  className="rounded-md border border-ink/15 px-2 py-1 text-[11px] font-medium text-ink/70 hover:bg-ink/5"
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(grantLink);
+                      setMsg("Enlace copiado al portapapeles.");
+                    } catch {
+                      setMsg("No se pudo copiar; selecciónalo manualmente.");
+                    }
+                  }}
+                >
+                  Copiar enlace
+                </button>
               </div>
             ) : null}
           </div>

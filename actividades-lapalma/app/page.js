@@ -2,6 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { PACK_PRICE_LABEL } from "@/lib/constants";
 
+/** Hero: foto real de la Caldera de Taburiente (Wikimedia Commons). */
+const HERO_IMAGE =
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Caldera_de_Taburiente_La_Palma.jpg/1920px-Caldera_de_Taburiente_La_Palma.jpg";
+
 export const dynamic = "force-dynamic";
 
 export default function HomePage() {
@@ -9,40 +13,40 @@ export default function HomePage() {
     <main>
       <section className="relative min-h-[100svh] overflow-hidden text-sand">
         <Image
-          src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2400&q=80"
-          alt="Crestas volcánicas y cielo abierto en La Palma"
+          src={HERO_IMAGE}
+          alt="Caldera de Taburiente, La Palma — foto real"
           fill
           priority
-          className="object-cover object-[center_35%]"
+          className="object-cover object-[center_40%]"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,10,9,0.35)_0%,rgba(12,10,9,0.25)_35%,rgba(12,10,9,0.78)_78%,rgba(12,10,9,0.95)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_20%,rgba(15,118,110,0.28),transparent_45%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,10,9,0.3)_0%,rgba(12,10,9,0.2)_40%,rgba(12,10,9,0.82)_82%,rgba(12,10,9,0.96)_100%)]" />
 
         <div className="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-end px-4 pb-28 pt-28 sm:px-6 sm:pb-24 md:pb-20">
-          <p className="animate-rise font-display text-[clamp(2.75rem,10vw,5.5rem)] leading-[0.95] tracking-tight text-foam">
+          <p className="animate-rise font-display text-[clamp(2.75rem,10vw,5.25rem)] leading-[0.95] tracking-tight text-foam">
             ActividadesLaPalma
           </p>
-          <h1 className="animate-rise-delay mt-5 max-w-[22ch] text-[clamp(1.2rem,3.4vw,1.75rem)] font-medium leading-snug text-sand/95">
-            Guías de ruta con alma local: lee gratis, y desbloquea el técnico
-            completo con un solo pack de {PACK_PRICE_LABEL}.
+          <h1 className="animate-rise-delay mt-5 max-w-[24ch] text-[clamp(1.25rem,3.2vw,1.7rem)] font-medium leading-snug text-sand/95">
+            Rutas reales de la isla: lee la guía gratis y, si quieres el
+            técnico completo, el pack cuesta {PACK_PRICE_LABEL} una sola vez.
           </h1>
-          <p className="animate-rise-late mt-4 max-w-md text-sm leading-relaxed text-sand/70 sm:text-base">
-            Tracks, terreno, variantes y PDFs de todas las rutas premium — pago
-            único, acceso de por vida.
+          <p className="animate-rise-late mt-4 max-w-lg text-sm leading-relaxed text-sand/70 sm:text-base">
+            Tracks, agua, variantes y PDFs de{" "}
+            <strong className="font-medium text-sand">todas</strong> las rutas
+            premium — acceso de por vida.
           </p>
           <div className="animate-rise-late mt-8 flex flex-wrap items-center gap-3">
             <Link
               href="/rutas"
               className="rounded-lg bg-ocean px-6 py-3.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(15,118,110,0.35)] transition hover:bg-teal-600"
             >
-              Explorar rutas
+              Ver rutas
             </Link>
             <a
               href="#pack"
               className="rounded-lg border border-sand/25 bg-white/5 px-5 py-3.5 text-sm font-medium text-sand backdrop-blur transition hover:bg-white/10"
             >
-              Qué incluye el pack
+              Qué desbloquean {PACK_PRICE_LABEL}
             </a>
           </div>
         </div>
@@ -52,33 +56,31 @@ export default function HomePage() {
         id="pack"
         className="relative overflow-hidden border-y border-ink/10 bg-[#171411] text-sand dark:border-sand/10"
       >
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_10%_0%,rgba(15,118,110,0.22),transparent_50%)]" />
         <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ocean">
             Pack técnico
           </p>
           <h2 className="mt-3 max-w-xl font-display text-3xl leading-tight text-foam sm:text-4xl">
-            {PACK_PRICE_LABEL} una vez. Todo el premium. Para siempre.
+            {PACK_PRICE_LABEL} · un pago · todo el premium
           </h2>
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-sand/65 sm:text-base">
-            Cada ruta tiene una capa gratis útil (ambiente, acceso, tips
-            esenciales). El pack abre la capa técnica de{" "}
-            <em>todas</em> las rutas premium: no es una suscripción ni un
-            pago por ruta.
+            En cada ruta hay una capa gratis útil. El pack abre la capa
+            técnica de todas las premium: GPS, terreno, escapes y PDF. No es
+            suscripción ni pago por ruta.
           </p>
-          <ul className="mt-10 grid gap-6 sm:grid-cols-3">
+          <ul className="mt-10 grid gap-8 sm:grid-cols-3">
             {[
               {
-                t: "Track y puntos clave",
+                t: "Track y waypoints",
                 d: "Referencias GPS, desvíos y puntos de agua cuando existen.",
               },
               {
                 t: "Terreno y variantes",
-                d: "Tipología del suelo, exposición y alternativas según forma.",
+                d: "Tipo de suelo, exposición y alternativas según forma.",
               },
               {
-                t: "PDF descargable",
-                d: "Lleva la ficha técnica al móvil o impresa, sin cobertura.",
+                t: "PDF de campo",
+                d: "Ficha para el móvil o impresa, sin depender de cobertura.",
               },
             ].map((item) => (
               <li key={item.t} className="border-t border-sand/15 pt-4">
@@ -89,37 +91,29 @@ export default function HomePage() {
               </li>
             ))}
           </ul>
-          <p className="mt-10 text-sm text-sand/55">
-            Usa el botón de pago fijo para comprar o reenviar tu acceso si ya
-            pagaste.
-          </p>
         </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
         <h2 className="font-display text-3xl text-forest dark:text-foam">
-          Del sendero al pack
+          Cómo funciona
         </h2>
-        <p className="mt-3 max-w-xl text-ink/70 dark:text-sand/65">
-          Sin dashboards ni ruido: eliges una ruta, lees lo gratis y decides si
-          quieres el técnico.
-        </p>
-        <ol className="mt-12 grid gap-10 sm:grid-cols-3">
+        <ol className="mt-10 grid gap-10 sm:grid-cols-3">
           {[
             {
               n: "01",
-              t: "Lee sin pagar",
-              d: "Todas las rutas están abiertas: resumen, ambiente y orientación real.",
+              t: "Lee gratis",
+              d: "Catálogo abierto: ambiente, acceso y tips en cada senda.",
             },
             {
               n: "02",
               t: "Mira el técnico",
-              d: "En premium verás un preview difuminado de esa misma guía — no un muro vacío.",
+              d: "En premium verás bullets reales de lo que incluye (no un muro vacío).",
             },
             {
               n: "03",
-              t: `Desbloquea ${PACK_PRICE_LABEL}`,
-              d: "Un pago. Magic link al correo. Acceso de por vida a toda la isla.",
+              t: `Pack ${PACK_PRICE_LABEL}`,
+              d: "Un pago. Magic link al correo. Acceso de por vida.",
             },
           ].map((item) => (
             <li key={item.n}>
@@ -140,7 +134,7 @@ export default function HomePage() {
             href="/rutas"
             className="inline-flex rounded-lg bg-forest px-5 py-3 text-sm font-semibold text-foam transition hover:opacity-90 dark:text-ink"
           >
-            Ir al catálogo de rutas
+            Ir al catálogo
           </Link>
         </div>
       </section>

@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PaymentCTA from "@/components/PaymentCTA";
 import ThemeScript from "@/components/ThemeScript";
-import { hasPremiumAccess } from "@/lib/access";
+import { canViewPremium } from "@/lib/access";
 import "./globals.css";
 
 const display = Fraunces({
@@ -36,7 +36,8 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const hasAccess = await hasPremiumAccess();
+  const premium = await canViewPremium();
+  const hasAccess = premium.ok;
 
   return (
     <html lang="es" suppressHydrationWarning>

@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import prisma from "./prisma";
+import { isAdminAuthenticated } from "./admin";
 import { ACCESS_COOKIE } from "./constants";
 
 /**
@@ -24,7 +25,19 @@ export async function hasPremiumAccess() {
     });
     return Boolean(purchase);
   } catch {
-    // Sin DATABASE_URL / DB caída: tratar como sin acceso.
     return false;
   }
+}
+
+/**
+ * Acceso a contenido premium: compra (cookie) O sesión admin (vista previa).
+ */
+export async function canViewPremium() {
+  if (await isAdminAuthenticated()) {
+    return { ok: true, via: "admin" };
+  }
+  if (await hasPremiumAccess()) {
+    return { ok: true, via: "purchase" };
+  }
+  return { ok: false, via: null };
 }

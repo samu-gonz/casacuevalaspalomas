@@ -33,6 +33,9 @@ export default function AdminDashboard({ initialAuthed }) {
   const [msg, setMsg] = useState("");
   const [error, setError] = useState("");
   const [newCode, setNewCode] = useState({ code: "", percentOff: 20 });
+  const [grantEmail, setGrantEmail] = useState("samuelgonz2006@gmail.com");
+  const [grantLink, setGrantLink] = useState("");
+  const [grantLoading, setGrantLoading] = useState(false);
 
   async function login(e) {
     e.preventDefault();
@@ -167,6 +170,31 @@ export default function AdminDashboard({ initialAuthed }) {
     await loadAll();
   }
 
+  async function grantAccess(e) {
+    e.preventDefault();
+    setError("");
+    setGrantLink("");
+    setGrantLoading(true);
+    try {
+      const res = await fetch("/api/admin/grant-access", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: grantEmail, sendEmail: true }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "No se pudo generar acceso");
+      setGrantLink(data.magicLink || "");
+      setMsg(
+        data.message ||
+          "Acceso generado. Abre el magic link (o cópialo) para activar la cookie."
+      );
+    } catch (err) {
+      setError(err.message || "Error al generar acceso");
+    } finally {
+      setGrantLoading(false);
+    }
+  }
+
   const title = useMemo(
     () => (editing ? (editing === "new" ? "Nueva ruta" : "Editar ruta") : null),
     [editing]
@@ -216,6 +244,7 @@ export default function AdminDashboard({ initialAuthed }) {
           ["places", "Rutas"],
           ["purchases", "Compras"],
           ["discounts", "Cupones"],
+          ["access", "Acceso demo"],
         ].map(([id, label]) => (
           <button
             key={id}
@@ -514,6 +543,48 @@ export default function AdminDashboard({ initialAuthed }) {
               </li>
             ))}
           </ul>
+        </section>
+      ) : null}
+
+      {tab === "access" ? (
+        <section className="mt-6 space-y-4">
+          <div className="rounded-xl border border-ink/10 bg-white p-5">
+            <h2 className="font-display text-xl text-forest">
+              Acceso premium sin pagar (Samuel)
+            </h2>
+            <p className="mt-2 text-sm text-ink/65">
+              Genera un magic link con cookie de 1 año (igual que un comprador).
+              También, si inicias sesión aquí, las rutas premium se muestran
+              desbloqueadas con banner «Vista admin».
+            </p>
+            <form onSubmit={grantAccess} className="mt-4 flex flex-wrap items-end gap-2">
+              <label className="text-sm">
+                <span className="mb-1 block text-xs text-ink/50">Email</span>
+                <input
+                  type="email"
+                  required
+                  value={grantEmail}
+                  onChange={(e) => setGrantEmail(e.target.value)}
+                  className="min-w-[16rem] rounded-lg border border-ink/15 px-3 py-2"
+                />
+              </label>
+              <button
+                type="submit"
+                disabled={grantLoading}
+                className="rounded-lg bg-ocean px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
+              >
+                {grantLoading ? "Generando…" : "Generar magic link"}
+              </button>
+            </form>
+            {grantLink ? (
+              <div className="mt-4 break-all rounded-lg bg-ink/5 p-3 text-xs">
+                <p className="mb-1 font-medium text-ink/70">Abre este enlace:</p>
+                <a href={grantLink} className="text-ocean underline">
+                  {grantLink}
+                </a>
+              </div>
+            ) : null}
+          </div>
         </section>
       ) : null}
     </main>

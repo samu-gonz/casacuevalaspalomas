@@ -2,6 +2,29 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
+/**
+ * Fotos reales de La Palma (Wikimedia Commons).
+ * Fuentes documentadas en IMAGES.md — no usar stocks genéricos ni IA.
+ */
+const IMG = {
+  caldera:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/La_Palma_-_Caldera_de_Taburiente_Interior_-_4.jpg/1280px-La_Palma_-_Caldera_de_Taburiente_Interior_-_4.jpg",
+  sanAntonio:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/San_Antonio_volcano_-_Panorama_03.jpg/1280px-San_Antonio_volcano_-_Panorama_03.jpg",
+  roque:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Roque_de_los_Muchachos_-_Rocks_01.jpg/1280px-Roque_de_los_Muchachos_-_Rocks_01.jpg",
+  tilos:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Los_Tilos_at_Island_of_La_Palma%2C_Spain.jpg/1280px-Los_Tilos_at_Island_of_La_Palma%2C_Spain.jpg",
+  nogales:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Playa_de_Nogales%2C_La_Palma%2C_overview.jpg/1280px-Playa_de_Nogales%2C_La_Palma%2C_overview.jpg",
+  volcanes:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/GR-131_Ruta_de_los_Volcanes_La_Palma_20080606d.jpg/1280px-GR-131_Ruta_de_los_Volcanes_La_Palma_20080606d.jpg",
+  hero:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Caldera_de_Taburiente_La_Palma.jpg/1280px-Caldera_de_Taburiente_La_Palma.jpg",
+};
+
+const SAMUEL_EMAIL = "samuelgonz2006@gmail.com";
+
 const places = [
   {
     slug: "volcan-san-antonio",
@@ -13,25 +36,24 @@ const places = [
     difficulty: "Fácil",
     durationMinutes: 90,
     distanceKm: 3.2,
-    coverImageUrl:
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=80",
+    coverImageUrl: IMG.sanAntonio,
     gpsLat: 28.4885,
     gpsLng: -17.8412,
     content: `## Por qué ir
-Un paseo corto entre malpaís y viñedos del sur. Perfecto al atardecer.
+Paseo corto entre malpaís y viñedos de Fuencaliente. Perfecto al atardecer, con el Atlántico al fondo.
 
 ## Cómo llegar
-Parking junto al centro de interpretación en Los Canarios / Fuencaliente. Señalización clara.
+Parking junto al centro de interpretación en Los Canarios. Señalización clara hasta el borde del cráter.
 
 ## Tips gratis
-- Lleva agua: poca sombra.
-- El viento del alisio aprieta en el borde del cráter.
-- Combínalo con la visita a Teneguía si te queda luz.`,
+- Lleva agua: poca sombra en el malpaís.
+- El alisio aprieta en el borde; sujeta el sombrero.
+- Combínalo con Teneguía si te queda luz.`,
     premiumContent: null,
     pdfUrl: null,
   },
   {
-    slug: "caldera-taburiente-barranco",
+    slug: "barranco-las-angustias",
     title: "Barranco de las Angustias",
     summary:
       "Entrada clásica a la Caldera: paredes verticales, agua y la sensación de entrar en otro planeta. Exige piernas y planificación.",
@@ -40,38 +62,56 @@ Parking junto al centro de interpretación en Los Canarios / Fuencaliente. Seña
     difficulty: "Exigente",
     durationMinutes: 420,
     distanceKm: 16.5,
-    coverImageUrl:
-      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80",
+    coverImageUrl: IMG.caldera,
     gpsLat: 28.716,
     gpsLng: -17.905,
     content: `## Ambiente
-El barranco abre la puerta a la Caldera de Taburiente. El contraste entre sol, sombra y paredes de basalto es brutal.
+El barranco abre la puerta a la Caldera de Taburiente. Sol, sombra y paredes de basalto en contraste brutal.
 
-## Acceso
-Salida habitual desde el aparcamiento inferior hacia el cauce. Revisa el estado del agua tras lluvias.
+## Acceso (capa gratis)
+Salida habitual desde el aparcamiento inferior hacia el cauce. Revisa caudales tras lluvias.
 
-## Qué esperar (capa gratis)
-- Tramos de piedras sueltas y cruce de cauces.
-- Temperatura muy distinta dentro/fuera.
+## Qué esperar sin pagar
+- Piedras sueltas y cruces de cauce.
+- Microclima muy distinto dentro/fuera.
 - Merece madrugar: menos gente y mejor luz.
 
 ## Para quién
-Senderistas con buena forma que ya hayan hecho alguna ruta larga en isla.`,
-    premiumContent: `## Track y puntos clave
-- Km 0: parking / control. Anota la hora de retorno.
-- Km 3–5: zona de piedras rodadas; bastones útiles.
-- Punto de agua fiable tras el tramo estrecho (estacional).
-- Mirador natural antes del ensanche: buen sitio para comer.
+Senderistas con buena forma que ya hayan hecho alguna ruta larga en la isla.`,
+    premiumContent: `## Qué incluye esta guía técnica
 
-## Terreno
-Mix de cantos rodados, losas húmedas y tramos de arena volcánica. Suela con buen taco.
+### Track GPS y puntos de paso
+| Punto | Ref. aprox. | Nota |
+| --- | --- | --- |
+| Parking / control | 28.7160, -17.9050 | Anota hora de retorno |
+| Primer estrecho | +3,2 km | Bastones útiles; piedras rodadas |
+| Fuente estacional | +5,1 km | Comprobar caudal en verano |
+| Ensanche / comida | +7,4 km | Sombra parcial a la izquierda |
 
-## Variantes
-- **Corta:** giro en el primer gran ensanche (~4 h ida/vuelta).
-- **Completa:** continúa hacia el interior según forma y hora (lleva frontal).
+### Desnivel y ritmo
+- Acumulado orientativo: **~850 m** de desnivel positivo en ida completa.
+- Ritmo seguro: 2,5–3 km/h en el lecho; no fuerces tras el km 5.
 
-## Seguridad
-No entres con aviso de lluvia fuerte. El barranco concentra avenida.`,
+### Agua y sombra
+1. Fuente señalizada tras el tramo estrecho (estacional).
+2. Nunca bebas del cauce sin tratar.
+3. Sombra real solo en paredes N–NE a media mañana.
+
+### Variantes
+- **Corta (~4 h ida/vuelta):** giro en el primer gran ensanche.
+- **Completa:** continúa al interior según forma y hora (frontal obligatorio).
+- **Escape:** no hay atajos laterales fiables; el retorno es por el mismo barranco.
+
+### Terreno y calzado
+Cantos rodados, losas húmedas y arena volcánica. Suela con taco agresivo. Tobilleras si tienes antecedentes.
+
+### Seguridad
+- No entrar con aviso de lluvia fuerte o avenida.
+- Teléfono con batería; cobertura irregular a partir del km 4.
+- Grupo mínimo recomendado: 2 personas.
+
+### PDF de campo
+Ficha imprimible con croquis de parking, tiempos parciales y checklist (disponible al desbloquear el pack; sube el PDF en admin si lo tienes).`,
     pdfUrl: null,
   },
   {
@@ -84,36 +124,49 @@ No entres con aviso de lluvia fuerte. El barranco concentra avenida.`,
     difficulty: "Moderada",
     durationMinutes: 150,
     distanceKm: 5.8,
-    coverImageUrl:
-      "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1600&q=80",
+    coverImageUrl: IMG.roque,
     gpsLat: 28.7543,
     gpsLng: -17.8946,
     content: `## Por qué sube la gente
 Estás sobre la Caldera, a menudo por encima de las nubes. Los telescopios marcan el paisaje.
 
 ## Acceso
-Carretera hasta la zona de aparcamientos cercanos al Roque. Puede haber niebla densa: conduce con calma.
+Carretera hasta aparcamientos cercanos al Roque. Niebla densa habitual: conduce con calma.
 
 ## Tips gratis
 - Abrigo aunque abajo haga calor.
-- Si hay nubes, espera 20 minutos: a veces se abre un “agujero” de luz.
-- Respeto a zonas restringidas de observatorios.`,
-    premiumContent: `## Track recomendado
-Circular suave enlazando miradores oeste → Roque → retorno por senda paralela a la carretera en tramos permitidos.
+- Si hay nubes, espera 20 minutos: a veces se abre un claro.
+- Respeta zonas restringidas de observatorios.`,
+    premiumContent: `## Guía técnica — Roque de los Muchachos
 
-## Terreno
-Piedra suelta fina y algo de hielo en invierno temprano. Guantes finos ayudan con el viento.
+### Track recomendado (circular suave)
+1. **Inicio:** parking oeste de miradores (28.754, -17.897).
+2. **Mirador Caldera:** 20–25 min; fotos con barandilla.
+3. **Roque / crestas:** +35 min; viento lateral frecuente.
+4. **Retorno:** senda paralela permitida a la carretera (evitar arcén).
 
-## Variantes
-- Solo ida al mirador principal (45–60 min).
-- Extensión hacia Punta de los Roques si hay visibilidad >5 km.
+### Waypoints clave
+- Aparcamiento A: 28.7543, -17.8965
+- Cruce senda norte: 28.7551, -17.8938
+- Punto más expuesto: 28.7560, -17.8920 (no acercarse al borde con niebla)
 
-## PDF
-La ficha técnica incluye croquis de aparcamientos y zonas de viento habitual.`,
+### Condiciones y capa
+| Señal | Qué hacer |
+| --- | --- |
+| Niebla < 50 m | No dejar asfalto/senda marcada |
+| Viento > 60 km/h | Cancelar extensión a Punta de los Roques |
+| Hielo fino (invierno) | Microspikes opcionales |
+
+### Variantes
+- Solo mirador principal: **45–60 min**.
+- Extensión Punta de los Roques: +1,5 h si visibilidad > 5 km.
+
+### Qué lleva el PDF
+Croquis de parkings, rosa de vientos habitual y zonas vetadas ORM.`,
     pdfUrl: null,
   },
   {
-    slug: "bosque-los-tilos",
+    slug: "los-tilos-cubo-galga",
     title: "Los Tilos — Cubo de la Galga",
     summary:
       "Laurisilva húmeda, túneles de vegetación y el sonido del agua. La La Palma verde que enamora en media jornada.",
@@ -122,35 +175,45 @@ La ficha técnica incluye croquis de aparcamientos y zonas de viento habitual.`,
     difficulty: "Moderada",
     durationMinutes: 210,
     distanceKm: 7.4,
-    coverImageUrl:
-      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80",
+    coverImageUrl: IMG.tilos,
     gpsLat: 28.789,
     gpsLng: -17.776,
     content: `## Ambiente
 Musgo, helechos y luz filtrada. Muy distinta al sur volcánico.
 
 ## Acceso
-Centro de visitantes / parking en Los Tilos. Hay tramos con escalones y raíces.
+Centro de visitantes / parking en Los Tilos. Tramos con escalones y raíces.
 
 ## Tips gratis
 - Suelo resbaladizo tras llovizna.
 - Ideal en días calurosos: microclima fresco.
-- Lleva capa fina impermeable aunque no “llueva” en la costa.`,
-    premiumContent: `## Track
-Subida por el barranco principal hasta el mirador del Cubo, retorno por senda alternativa para evitar deshacer todo el desnivel en el mismo lecho.
+- Capa fina impermeable aunque no “llueva” en la costa.`,
+    premiumContent: `## Guía técnica — Los Tilos / Cubo de la Galga
 
-## Puntos de agua
-Fuente señalizada a mitad de subida (comprobar caudal en verano).
+### Track
+- **Subida:** barranco principal hasta mirador del Cubo (~3,6 km).
+- **Retorno:** senda alternativa este para no deshacer todo el desnivel en el mismo lecho.
+- Desnivel +: **~520 m**. Tiempo neto: 3–3,5 h sin paradas largas.
 
-## Terreno
-Raíces expuestas + peldaños de piedra. Tobillera estable recomendable.
+### Puntos de agua
+1. Fuente señalizada a ~1,8 km (comprobar en agosto).
+2. No uses charcas del lecho sin filtro.
 
-## Variante familiar
-Solo hasta el primer puente y vuelta (~1 h).`,
+### Terreno
+Raíces expuestas, peldaños de piedra húmeda, pasarelas. Tobillera estable recomendable. Bastón corto ayuda en la bajada.
+
+### Variante familiar
+Solo hasta el primer puente y vuelta (**~1 h**). Ideal con niños acostumbrados a caminar.
+
+### Fauna / normas
+No salgas de la senda: laurisilva frágil. Evita altavoces.
+
+### PDF
+Mapa del circuito, tiempos parciales y foto-referencia del desvío de retorno.`,
     pdfUrl: null,
   },
   {
-    slug: "playa-nogales",
+    slug: "mirador-nogales",
     title: "Mirador y bajada a Nogales",
     summary:
       "La postal del este: acantilado verde y playa de callaos. La bajada es corta pero firme; el mar manda.",
@@ -159,8 +222,7 @@ Solo hasta el primer puente y vuelta (~1 h).`,
     difficulty: "Moderada",
     durationMinutes: 100,
     distanceKm: 2.1,
-    coverImageUrl:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80",
+    coverImageUrl: IMG.nogales,
     gpsLat: 28.759,
     gpsLng: -17.743,
     content: `## Por qué ir
@@ -172,7 +234,7 @@ Parking del mirador. La senda baja en zig-zag; no es larga pero pide rodilla est
 ## Tips gratis
 - No te fíes del “mar en calma”: corrientes en callaos.
 - Sube con tiempo de luz: la subida cansa más de lo que parece.
-- Calzado cerrado; la arena y piedra queman/deslizan.`,
+- Calzado cerrado; la piedra quema y desliza.`,
     premiumContent: null,
     pdfUrl: null,
   },
@@ -186,32 +248,51 @@ Parking del mirador. La senda baja en zig-zag; no es larga pero pide rodilla est
     difficulty: "Exigente",
     durationMinutes: 480,
     distanceKm: 18,
-    coverImageUrl:
-      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=80",
+    coverImageUrl: IMG.volcanes,
     gpsLat: 28.596,
     gpsLng: -17.841,
     content: `## Ambiente
 Caminas sobre historia geológica reciente. Paisaje lunar con el Atlántico a ambos lados en los claros.
 
 ## Logística (gratis)
-- Logística de dos coches o taxi muy recomendable.
+- Dos coches o taxi muy recomendable.
 - Empieza temprano; no hay sombra real.
 - Agua: mínimo 2–3 L por persona.
 
 ## Para quién
 Quienes ya han hecho una exigente en la isla y quieren la “dorsal”.`,
-    premiumContent: `## Track (tramo central)
-Puntos de paso entre refugios/miradores clave, con tiempos parciales orientativos y escape hacia carretera en dos puntos.
+    premiumContent: `## Guía técnica — Ruta de los Volcanes (tramo central)
 
-## Terreno
-Arena volcánica profunda (gasto energético alto), crestas ventosas y tramos de piedra suelta en bajadas.
+### Track y tiempos parciales (orientativos)
+| Tramo | Dist. | Tiempo | Notas |
+| --- | --- | --- | --- |
+| Refugio / inicio sector | 0 km | 0:00 | Control de viento |
+| Montaña Quemada | 4,5 km | 1:40 | Arena profunda |
+| Cruce mirador dorsal | 9 km | 3:30 | Escape carretera S |
+| Fin tramo central | 18 km | 6:30–7:30 | Taxi / segundo coche |
 
-## Variantes
-- Solo tramo norte del sector (acorta ~40%).
-- Combinación con pernocta planificada (fuera de este pack de día).
+### Terreno
+- Arena volcánica profunda → gasto energético alto (+20–30 %).
+- Crestas ventosas; gafas de sol y braga.
+- Bajadas de piedra suelta: pies cortos, no correr.
 
-## Checklist
-Frontal, cortavientos, más agua de la que crees, y plan de recogida escrito.`,
+### Escapes a carretera
+1. Km ~6,2 — pista secundaria señalizada (solo si emergencia).
+2. Km ~11 — enlace GR hacia LP-2 (confirmado en ficha PDF).
+
+### Checklist premium
+- [ ] Frontal + batería
+- [ ] Cortavientos
+- [ ] 3 L agua / persona
+- [ ] Plan de recogida escrito (hora + teléfono)
+- [ ] Offline map / track GPX (en PDF del pack)
+
+### Variantes
+- Solo tramo norte del sector: acorta ~40 %.
+- Pernocta planificada: fuera de este pack de día.
+
+### PDF
+Track GPX resumido, tabla de escapes y croquis de parkings norte/sur.`,
     pdfUrl: null,
   },
 ];
@@ -231,7 +312,29 @@ async function main() {
     update: { percentOff: 10, active: true },
   });
 
-  console.log(`Seed OK: ${places.length} rutas + cupón PALMA10`);
+  // Compra demo para Samuel (sin Stripe): permite magic link / reenvío.
+  await prisma.purchase.upsert({
+    where: { stripeSessionId: "seed-demo-samuel" },
+    create: {
+      email: SAMUEL_EMAIL,
+      stripeSessionId: "seed-demo-samuel",
+      amountPaid: 0,
+      discountApplied: true,
+      discountCode: "DEMO-SAMUEL",
+    },
+    update: {
+      email: SAMUEL_EMAIL,
+      discountApplied: true,
+      discountCode: "DEMO-SAMUEL",
+    },
+  });
+
+  console.log(
+    `Seed OK: ${places.length} rutas + PALMA10 + purchase demo ${SAMUEL_EMAIL}`
+  );
+  console.log(
+    "Samuel: entra en /admin → «Generar acceso» o usa ¿Ya compraste? con su email."
+  );
 }
 
 main()

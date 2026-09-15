@@ -47,8 +47,9 @@ export default async function RutasPage({ searchParams }) {
           Rutas en La Palma
         </h1>
         <p className="mt-3 text-base leading-relaxed text-ink/70 dark:text-sand/65">
-          Todas las sendas del catálogo. Las marcadas como premium incluyen una
-          guía técnica (track, terreno, variantes, PDF) dentro del pack de 6€.
+          Cada ficha muestra qué es <strong>gratis</strong> y qué entra en el
+          pack de 6€ (track, agua, variantes, PDF). En dos segundos lo tienes
+          claro.
         </p>
       </header>
 

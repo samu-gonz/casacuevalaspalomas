@@ -13,6 +13,9 @@ export const ACCESS_TOKEN_TTL_MS = 1000 * 60 * 60 * 24 * 7;
 
 export const CASA_CUEVA_URL = "https://casa-cueva-las-palomas.vercel.app";
 
+/** Email de Samuel para demos / acceso sin Stripe. */
+export const SAMUEL_DEMO_EMAIL = "samuelgonz2006@gmail.com";
+
 export const ZONES = [
   "Norte",
   "Sur",

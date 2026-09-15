@@ -3,24 +3,17 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 /**
- * Fotos reales de La Palma (Wikimedia Commons).
- * Fuentes documentadas en IMAGES.md — no usar stocks genéricos ni IA.
+ * Fotos reales de La Palma (espejo local en public/images).
+ * Atribución y licencias en IMAGES.md — no usar stocks genéricos ni IA.
  */
 const IMG = {
-  caldera:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/La_Palma_-_Caldera_de_Taburiente_Interior_-_4.jpg/1280px-La_Palma_-_Caldera_de_Taburiente_Interior_-_4.jpg",
-  sanAntonio:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/San_Antonio_volcano_-_Panorama_03.jpg/1280px-San_Antonio_volcano_-_Panorama_03.jpg",
-  roque:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Roque_de_los_Muchachos_-_Rocks_01.jpg/1280px-Roque_de_los_Muchachos_-_Rocks_01.jpg",
-  tilos:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Los_Tilos_at_Island_of_La_Palma%2C_Spain.jpg/1280px-Los_Tilos_at_Island_of_La_Palma%2C_Spain.jpg",
-  nogales:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Playa_de_Nogales%2C_La_Palma%2C_overview.jpg/1280px-Playa_de_Nogales%2C_La_Palma%2C_overview.jpg",
-  volcanes:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/GR-131_Ruta_de_los_Volcanes_La_Palma_20080606d.jpg/1280px-GR-131_Ruta_de_los_Volcanes_La_Palma_20080606d.jpg",
-  hero:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Caldera_de_Taburiente_La_Palma.jpg/1280px-Caldera_de_Taburiente_La_Palma.jpg",
+  caldera: "/images/places/barranco-angustias.jpg",
+  sanAntonio: "/images/places/volcan-san-antonio.jpg",
+  roque: "/images/places/roque-muchachos.jpg",
+  tilos: "/images/places/los-tilos.jpg",
+  nogales: "/images/places/playa-nogales.jpg",
+  volcanes: "/images/places/ruta-volcanes.jpg",
+  hero: "/images/hero-caldera.jpg",
 };
 
 const SAMUEL_EMAIL = "samuelgonz2006@gmail.com";
@@ -298,6 +291,8 @@ Track GPX resumido, tabla de escapes y croquis de parkings norte/sur.`,
 ];
 
 async function main() {
+  const keepSlugs = places.map((p) => p.slug);
+
   for (const place of places) {
     await prisma.place.upsert({
       where: { slug: place.slug },
@@ -305,6 +300,11 @@ async function main() {
       update: place,
     });
   }
+
+  // Quita rutas huérfanas (p.ej. covers Unsplash de seeds antiguos).
+  const removed = await prisma.place.deleteMany({
+    where: { slug: { notIn: keepSlugs } },
+  });
 
   await prisma.discountCode.upsert({
     where: { code: "PALMA10" },
@@ -330,7 +330,7 @@ async function main() {
   });
 
   console.log(
-    `Seed OK: ${places.length} rutas + PALMA10 + purchase demo ${SAMUEL_EMAIL}`
+    `Seed OK: ${places.length} rutas + PALMA10 + purchase demo ${SAMUEL_EMAIL} (eliminadas huérfanas: ${removed.count})`
   );
   console.log(
     "Samuel: entra en /admin → «Generar acceso» o usa ¿Ya compraste? con su email."

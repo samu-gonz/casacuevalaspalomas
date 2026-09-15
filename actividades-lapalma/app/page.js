@@ -2,9 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { PACK_PRICE_LABEL } from "@/lib/constants";
 
-/** Hero: foto real de la Caldera de Taburiente (Wikimedia Commons). */
-const HERO_IMAGE =
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Caldera_de_Taburiente_La_Palma.jpg/1920px-Caldera_de_Taburiente_La_Palma.jpg";
+/** Hero: foto real Caldera de Taburiente (espejo local; atribución en IMAGES.md). */
+const HERO_IMAGE = "/images/hero-caldera.jpg";
 
 export const dynamic = "force-dynamic";
 
